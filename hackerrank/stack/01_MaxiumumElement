@@ -1,0 +1,53 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int type;
+        int tmpVal;
+        int max = 0;
+
+        Stack<MyStack> stack = new Stack<MyStack>();
+
+        while (n > 0) {
+
+            type = sc.nextInt();
+            if (type == 1) {
+                tmpVal = sc.nextInt();
+                max = Math.max(tmpVal, max);
+
+                stack.push(new MyStack(tmpVal, max));
+
+            } else if (type == 2) {
+                if (!stack.empty()) {
+                    stack.pop();
+                }
+
+                if (stack.empty()) {
+                    max = Integer.MIN_VALUE;
+                } else {
+                    max = stack.peek().max;
+                }
+            } else if (type == 3) {
+                System.out.println(stack.peek().max);
+            }
+            n--;
+        }
+        sc.close();
+    }
+
+
+}
+class MyStack {
+    int val;
+    int max;
+
+    MyStack(int val, int max) {
+        this.val = val;
+        this.max = max;
+    }
+
+}

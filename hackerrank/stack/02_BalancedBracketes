@@ -1,0 +1,88 @@
+//import structures.Stack;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.Stack;
+
+
+public class Main {
+
+    // Complete the isBalanced function below.
+    static String isBalanced(String s) {
+        int strLen = s.length();
+        Character tmp;
+
+        Stack<Character> myStack = new Stack<Character>();
+
+        for (int i = 0; i < strLen; i++) {
+            char ch = s.charAt(i);
+
+            switch (ch) {
+                case '{':
+                case '[':
+                case '(':
+                    myStack.push(ch);
+                    break;
+                case ')':
+                    if (myStack.isEmpty()) {
+                        return "NO";
+                    }
+
+                    if (myStack.peek() != '(')
+                        return "NO";
+                    myStack.pop();
+                    break;
+                case ']':
+                    if (myStack.isEmpty()) {
+                        return "NO";
+                    }
+
+                    if (myStack.peek() != '[')
+                        return "NO";
+                    myStack.pop();
+                    break;
+                case '}':
+                    if (myStack.isEmpty()) {
+                        return "NO";
+                    }
+
+                    if (myStack.peek() != '{')
+                        return "NO";
+                    myStack.pop();
+                    break;
+            }
+        }
+        if (myStack.isEmpty()) {
+            return "YES";
+        }
+        return "NO";
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+
+
+//        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("Path")));
+
+        int t = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        for (int tItr = 0; tItr < t; tItr++) {
+            String s = scanner.nextLine();
+
+            String result = isBalanced(s);
+
+            System.out.println(result);
+//            bufferedWriter.write(result);
+//            bufferedWriter.newLine();
+        }
+
+//        bufferedWriter.close();
+
+        scanner.close();
+    }
+
+}
