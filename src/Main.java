@@ -6,53 +6,11 @@ import java.util.Vector;
 
 public class Main {
 
-    // Append str to the end of mainString
-    private static void append(String str) {
-
-    }
-
-    // Delete the last k characters of mainString
-    private static void delete(int value) {
-
-    }
-
-    // Print the k-th character of mainString
-    private void print(int value) {
-        System.out.println(this.mainSting.charAt(value));
-    }
-
-    // Undo the last operation of append and delete
-    private static void undo(int value) {
-
-    }
-
-    private static void performOperations(Vector<StackNode> operations) {
-
-        for (int i = 0; i < operations.size(); i++) {
-
-            StackNode node = operations.get(i);
-            switch (node.type) {
-                case 1:
-                    append(node.value);
-                    break;
-                case 2:
-                    delete(Integer.parseInt(node.value));
-                    break;
-                case 3:
-                    print(Integer.parseInt(node.value));
-                    break;
-                case 4:
-                    undo(Integer.parseInt(node.value));
-                    break;
-            }
-        }
-    }
-
-    private String mainSting;
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+
+        Solution mySol = new Solution();
 
         int n = scanner.nextInt();
 
@@ -68,10 +26,57 @@ public class Main {
             operations.add(new StackNode(type, value));
         }
 
-        performOperations(operations);
+        mySol.performOperations(operations);
 
 
         scanner.close();
+    }
+}
+
+class Solution {
+
+    private String mainSting;
+
+    // Append str to the end of mainString
+    public void append(String str) {
+        this.mainSting = this.mainSting.concat(str);
+    }
+
+    // Delete the last k characters of mainString
+    public void delete(int value) {
+        this.mainSting = this.mainSting.substring(0, this.mainSting.length() - value - 1);
+    }
+
+    // Print the k-th character of mainString
+    public void print(int value) {
+        System.out.println(this.mainSting.charAt(value));
+    }
+
+    // Undo the last operation of append and delete
+    public void undo(int value) {
+
+    }
+
+    public void performOperations(Vector<StackNode> operations) {
+
+        for (int i = 0; i < operations.size(); i++) {
+
+            StackNode node = operations.get(i);
+            switch (node.type) {
+                case 1:
+                    this.append(node.value);
+                    break;
+                case 2:
+                    this.delete(Integer.parseInt(node.value));
+                    break;
+                case 3:
+                    this.print(Integer.parseInt(node.value));
+                    break;
+                case 4:
+                    this.undo(Integer.parseInt(node.value));
+                    break;
+            }
+        }
     }
 }
 
@@ -84,3 +89,4 @@ class StackNode {
         this.value = value;
     }
 }
+
