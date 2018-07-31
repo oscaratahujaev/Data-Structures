@@ -10,7 +10,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        Solution mySol = new Solution();
 
         int n = scanner.nextInt();
 
@@ -25,9 +24,8 @@ public class Main {
 
             operations.add(new StackNode(type, value));
         }
-
-        mySol.performOperations(operations);
-
+        Solution mySol = new Solution(operations);
+        mySol.performOperations();
 
         scanner.close();
     }
@@ -36,6 +34,13 @@ public class Main {
 class Solution {
 
     private String mainSting;
+    private Vector<StackNode> operations;
+    private Stack<StackNode> undoOperations;
+
+    Solution(Vector<StackNode> operations) {
+        this.operations = operations;
+        this.undoOperations = new Stack<StackNode>();
+    }
 
     // Append str to the end of mainString
     public void append(String str) {
@@ -52,28 +57,47 @@ class Solution {
         System.out.println(this.mainSting.charAt(value));
     }
 
+
     // Undo the last operation of append and delete
-    public void undo(int value) {
+    public void undo(int value, int operationIndex) {
+        StackNode node = this.operations.get(operationIndex);
+
+        if (node.type == 1) {
+            // undo operation of append of string
+            this.delete(node.value.length());
+
+
+        } else if (node.type == 2) {
+
+
+            // undo operation of delete
+            String deletedString = this.undoOperations.peek()
+            this.delete(node.value.length());
+        }
 
     }
 
-    public void performOperations(Vector<StackNode> operations) {
+    public void performOperations() {
 
-        for (int i = 0; i < operations.size(); i++) {
+        for (int i = 0; i < this.operations.size(); i++) {
 
-            StackNode node = operations.get(i);
+            StackNode node = this.operations.get(i);
+
             switch (node.type) {
                 case 1:
                     this.append(node.value);
+                    undoOperations.push(i);
                     break;
                 case 2:
                     this.delete(Integer.parseInt(node.value));
+                    undoOperations.push(new StackNode(i, node.value));
                     break;
                 case 3:
                     this.print(Integer.parseInt(node.value));
                     break;
                 case 4:
-                    this.undo(Integer.parseInt(node.value));
+                    int operationIndex = undoOperations.pop().type;
+                    this.undo(Integer.parseInt(node.value), operationIndex);
                     break;
             }
         }
