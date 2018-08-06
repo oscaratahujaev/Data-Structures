@@ -1,0 +1,58 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.Vector;
+
+
+public class Main {
+
+    private static String mainString = new String();
+    private static Stack<String> operations = new Stack<String>();
+
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+
+        int n = scanner.nextInt();
+        String value = new String();
+
+        for (int i = 0; i < n; i++) {
+            int type = scanner.nextInt();
+            switch (type) {
+                case 1:
+                    value = scanner.next();
+                    operations.push(mainString);
+                    append(value);
+                    break;
+                case 2:
+                    value = scanner.next();
+                    operations.push(mainString);
+                    delete(Integer.parseInt(value));
+                    break;
+                case 3:
+                    int tmp = scanner.nextInt();
+                    System.out.println(mainString.charAt(tmp - 1));
+                    break;
+                case 4:
+                    mainString = operations.pop();
+//                    operations.pop();
+                    break;
+            }
+        }
+        scanner.close();
+    }
+
+
+    // Append str to the end of mainString
+    public static void append(String str) {
+        mainString = mainString.concat(str);
+    }
+
+    // Delete the last k characters of mainString
+    public static void delete(int value) {
+        mainString = mainString.substring(0, mainString.length() - value);
+    }
+}

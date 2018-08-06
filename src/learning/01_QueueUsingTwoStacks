@@ -1,0 +1,58 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int val;
+        Queue<Integer> qu = new Queue<Integer>();
+
+        for (int i = 0; i < n; i++) {
+            int type = sc.nextInt();
+            switch (type) {
+                case 1:
+                    qu.enqueue(sc.nextInt());
+                    break;
+                case 2:
+                    qu.dequeue();
+                    break;
+                case 3:
+                    System.out.println(qu.peek());
+                    break;
+            }
+        }
+    }
+}
+
+class Queue<E> {
+    private Stack<E> inStack = new Stack<E>();
+    private Stack<E> outStack = new Stack<E>();
+
+    public void enqueue(E elem) {
+
+        inStack.push(elem);
+    }
+
+    public void dequeue() {
+        if (outStack.isEmpty()) {
+            while (!inStack.isEmpty()) {
+                outStack.push(inStack.pop());
+            }
+        }
+        outStack.pop();
+    }
+
+    public E peek() {
+        if (outStack.isEmpty()) {
+            while (!inStack.isEmpty()) {
+                outStack.push(inStack.pop());
+            }
+        }
+        return outStack.peek();
+    }
+}
